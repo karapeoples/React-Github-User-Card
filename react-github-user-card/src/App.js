@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import "./App.css";
 import axios from "axios";
+import { Row } from 'reactstrap';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faGithubSquare } from '@fortawesome/free-brands-svg-icons';
 import { faCodeBranch } from '@fortawesome/free-solid-svg-icons';
 import UserCard from "./components/UserCard";
 import FollowerCard from "./components/FollowerCard";
+import { Icon, Input } from 'semantic-ui-react'
 library.add(faCodeBranch, faGithubSquare)
 
 
@@ -32,7 +34,7 @@ class App extends Component {
 					followers: data.data.followers,
 				});
 			})
-			.catch(err => console.log("You have encountered an error", err));
+			.catch(err => console.log("You have encountered an error", err))
 
 			
 		axios
@@ -68,8 +70,8 @@ class App extends Component {
 
 	render() {
 		return (
-			<div>
-				<h1>GitHub User Info</h1>
+			<div className='AppBox'>
+				<h1 className='App'>GitHub User Info</h1>
 
 				<UserCard
 					name={this.state.name}
@@ -84,18 +86,24 @@ class App extends Component {
 					iconB={faCodeBranch}
 				/>
 
-				<h1>{this.state.name}'s Followers:</h1>
-				<div>
+				
+				<div >
 					<form>
-						<h3>Search Bar</h3>
-						<input
+						<section className='frame'>
+						<h3 className='font'>{this.state.name}' Followers:</h3>
+						<h5 className='font' >Search Bar</h5>
+							<Input
+							icon={<Icon name='search' inverted circular link />}
+							placeholder='Search...'
 							onChange={this.handleChange}
 							type="text"
 							name="searchTerm"
 							value={this.state.searchTerm}
-							placeholder="Search "></input>
+							/>
+						</section>
 					</form>
 					<div>
+						<Row>
 						{this.state.followersList.map(info => {
 							return (
 								<FollowerCard
@@ -109,6 +117,7 @@ class App extends Component {
 								/>
 							);
 						})}
+						</Row>
 					</div>
 				</div>
 			</div>
